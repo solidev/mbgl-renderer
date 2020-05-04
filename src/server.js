@@ -5,7 +5,7 @@ import restifyValidation from 'node-restify-validation'
 import restifyErrors from 'restify-errors'
 import cli from 'commander'
 import logger from 'morgan'
-
+import corsMiddleware from 'restify-cors-middleware'
 import { version } from '../package.json'
 import { render } from './render'
 
@@ -17,6 +17,13 @@ const raiseError = msg => {
     console.error('ERROR:', msg)
     process.exit(1)
 }
+
+const cors = corsMiddleware({
+  preflightMaxAge: 5, //Optional
+  origins: ['*'],
+  allowHeaders: [],
+  exposeHeaders: []
+})
 
 const PARAMS = {
     style: { isRequired: true, isString: true },
@@ -260,6 +267,8 @@ const { port = 8000, tiles: tilePath = null, verbose = false } = cli
 export const server = restify.createServer({
     ignoreTrailingSlash: true,
 })
+server.pre(cors.preflight)
+server.use(cors.actual)
 server.use(restify.plugins.queryParser())
 server.use(restify.plugins.bodyParser())
 server.use(

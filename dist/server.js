@@ -24,6 +24,8 @@ var _commander = _interopRequireDefault(require("commander"));
 
 var _morgan = _interopRequireDefault(require("morgan"));
 
+var _restifyCorsMiddleware = _interopRequireDefault(require("restify-cors-middleware"));
+
 var _package = require("../package.json");
 
 var _render = require("./render");
@@ -41,6 +43,13 @@ var raiseError = function raiseError(msg) {
   process.exit(1);
 };
 
+var cors = (0, _restifyCorsMiddleware["default"])({
+  preflightMaxAge: 5,
+  //Optional
+  origins: ['*'],
+  allowHeaders: [],
+  exposeHeaders: []
+});
 var PARAMS = {
   style: {
     isRequired: true,
@@ -259,6 +268,8 @@ var server = _restify["default"].createServer({
 });
 
 exports.server = server;
+server.pre(cors.preflight);
+server.use(cors.actual);
 server.use(_restify["default"].plugins.queryParser());
 server.use(_restify["default"].plugins.bodyParser());
 server.use(_nodeRestifyValidation["default"].validationPlugin({
