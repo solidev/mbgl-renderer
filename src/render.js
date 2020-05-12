@@ -257,7 +257,8 @@ const getRemoteTile = (url, callback) => {
                 default: {
                     // assume error
                     console.error(
-                        `Error with request for: ${url}\nstatus: ${res.statusCode}`
+                        `Error with request for: ${url}\nstatus: ${res.statusCode}`,
+			url, res
                     )
                     return callback(
                         new Error(
@@ -297,7 +298,8 @@ const getRemoteAsset = (url, callback) => {
                 default: {
                     // assume error
                     console.error(
-                        `Error with request for: ${url}\nstatus: ${res.statusCode}`
+                        `Error with request for: ${url}\nstatus: ${res.statusCode}`,
+			    url, res
                     )
                     return callback(
                         new Error(

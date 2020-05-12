@@ -324,7 +324,7 @@ var getRemoteTile = function getRemoteTile(url, callback) {
       default:
         {
           // assume error
-          console.error("Error with request for: ".concat(url, "\nstatus: ").concat(res.statusCode));
+          console.error("Error with request for: ".concat(url, "\nstatus: ").concat(res.statusCode), url, res);
           return callback(new Error("Error with request for: ".concat(url, "\nstatus: ").concat(res.statusCode)));
         }
     }
@@ -361,7 +361,7 @@ var getRemoteAsset = function getRemoteAsset(url, callback) {
       default:
         {
           // assume error
-          console.error("Error with request for: ".concat(url, "\nstatus: ").concat(res.statusCode));
+          console.error("Error with request for: ".concat(url, "\nstatus: ").concat(res.statusCode), url, res);
           return callback(new Error("Error with request for: ".concat(url, "\nstatus: ").concat(res.statusCode)));
         }
     }
